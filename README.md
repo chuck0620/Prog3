@@ -1,10 +1,10 @@
 # Prog3
 Programozás alapjai 3 tárgyhoz tartozó fájlok
 
-##Laborok
+## Laborok
 
 Laborfeladatok megoldásai
 
-##Homework
+## Homework
 
 Házi feladat
