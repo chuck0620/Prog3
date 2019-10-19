@@ -19,5 +19,5 @@ public class Brain {
 			directions[i].fromAngle(angle);
 		}
 	}
-
+//test
 }
