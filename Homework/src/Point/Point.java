@@ -56,7 +56,6 @@ public class Point extends Container{
 	public void paint(Graphics g) {
 			Graphics2D g2 = (Graphics2D)g;
 			g2.fill(new Ellipse2D.Double(pos.getX(), pos.getY(), 5, 5));
-			//g2.drawOval(pos.getX(), pos.getY(), 1, 1);
 	}
 	
 }
