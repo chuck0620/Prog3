@@ -1,6 +1,4 @@
 package Point;
-import Point.*;
-import java.util.Random;
 public class Brain {
 	Vector[] directions;
 	int step;
@@ -12,7 +10,9 @@ public class Brain {
 		}
 		randomize();
 	}
-	
+	public int getStep() {
+		return step;
+	}
 	void randomize() {									//Randomizing the vectors
 		for(int i = 0; i < directions.length; i++) {
 			double angle = Math.random() * 2 * Math.PI; //Random number from 0 to 2*PI

@@ -6,13 +6,40 @@ import javax.swing.*;
 
 import Point.*;
 import Point.Point;
-public class Application extends JFrame{
-
+public class Application{
+	
+	
+	
+	
+	void run() {
+		int x = 0;
+		boolean fut = true;
+		while(fut) {
+			switch (x) {
+			case 0:
+				
+			case 1:
+				
+			case 2:
+				fut = false;
+		
+			}
+		}
+	}
+	
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		Display dp = new Display();
-		dp.move();
-		
+		Point p = new Point();
+		if(p.contains(0, 0, 300, 300))
+			System.out.println("Contains!");
+		//dp.move();
+		while(true) {
+			Graphics g = dp.getCanvas().getGraphics();
+			dp.paint(g, p);
+			Thread.sleep(1000);
+			System.out.println("aa");
+		}
 		/*JFrame f = new JFrame();
 		JPanel jp = new JPanel(new BorderLayout());
 		f.setVisible(true);

@@ -1,9 +1,16 @@
 package Point;
-import Point.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
-import javax.swing.*;
-public class Point extends Container{
+import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+public class Point implements Shape{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	Brain brain;
 	
 	public Vector vel;
@@ -31,6 +38,9 @@ public class Point extends Container{
 	public void calculateFitness() {
 		
 	}
+	public void setisBest() {
+		isBest = true;
+	}
 	public void move() {
 		if(brain.directions.length > brain.step) {
 			acc.modifyX(acc.getX() + brain.directions[brain.step].getX());
@@ -48,14 +58,82 @@ public class Point extends Container{
 		if(pos.getX() >= 400 || pos.getY() >= 400 || pos.getX() <= 0 || pos.getY() < 0) {
 			isDed = true;
 		}
-		else {
+		/*else {
 		repaint();
-		}	
+		}	*/
 		}	
 	}
-	public void paint(Graphics g) {
+	public Brain getBrain() {
+		return brain;
+	}
+	public Vector getPos() {
+		return pos;
+	}
+	/*public void paint(Graphics g) {
 			Graphics2D g2 = (Graphics2D)g;
 			g2.fill(new Ellipse2D.Double(pos.getX(), pos.getY(), 5, 5));
+	}*/
+	public int getDistance(double x, double y, double w, double h) {
+		int distance = 9999;
+		
+		
+		
+		return distance;
+	}
+	
+	@Override
+	public Rectangle getBounds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Rectangle2D getBounds2D() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean contains(double x, double y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean contains(Point2D p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean intersects(double x, double y, double w, double h) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean intersects(Rectangle2D r) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	//A pont benne van-e a koordináták által határolt területen
+	@Override
+	public boolean contains(double x, double y, double w, double h) {
+		// TODO Auto-generated method stub
+		if(pos.getX() >= x || pos.getY() >= y || pos.getX() <= w || pos.getY() <= h) 
+			return true;
+		return false;
+	}
+	@Override
+	public boolean contains(Rectangle2D r) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public PathIterator getPathIterator(AffineTransform at) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public PathIterator getPathIterator(AffineTransform at, double flatness) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
