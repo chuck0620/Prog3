@@ -6,6 +6,7 @@ import Point.Point;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -24,27 +25,36 @@ public class Display extends JFrame {
 	
 	public Display()
 	{
-		super("MyGame");
-		jp = new JPanel(new BorderLayout());
-		canvas = new Canvas();
-		setSize(400,400);
+		super("My Game");
+		setSize(600,600);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		
-		canvas.setPreferredSize(new Dimension(400, 400));
-        canvas.setMaximumSize(new Dimension(400, 400));
-        canvas.setMinimumSize(new Dimension(400, 400));
-		
-        jp.add(canvas, BorderLayout.CENTER);
-        add(jp);
-        pack();
         setVisible(true);
        
         
 		
 	}
+	
+	public void initGame() {
+		jp = new JPanel(new FlowLayout());
+		canvas = new Canvas();
+
+		JButton saveButton = new JButton("Save and Exit");
+		
+		
+		canvas.setPreferredSize(new Dimension(401, 401));
+        canvas.setMaximumSize(new Dimension(401, 401));
+        canvas.setMinimumSize(new Dimension(401, 401));
+        jp.add(canvas);
+		jp.add(saveButton);
+        add(jp);
+        pack();
+	}
+	
+	public void stopGame() {
+		remove(jp);
+	}
+	
 	
 	public Canvas getCanvas() {
 		return canvas;
@@ -52,8 +62,8 @@ public class Display extends JFrame {
 	
 	public void paint(Graphics g, Point p) {
 		//Graphics2D g2 = (Graphics2D)g;
-		g.fillOval(p.getPos().getX(), p.getPos().getY(), 50, 50);
-		System.out.println("Draw");
+		g.fillOval(p.getPos().getX(), p.getPos().getY(), 5, 5);
+		//System.out.println("Draw");
 	}
 	
 }

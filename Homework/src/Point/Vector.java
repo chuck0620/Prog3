@@ -9,7 +9,7 @@ public class Vector {
 		y = 0;
 		limit = 99999;
 	}
-	Vector(int newx, int newy){
+	public Vector(int newx, int newy){
 		x = newx;
 		y = newy;
 		limit = 99999;

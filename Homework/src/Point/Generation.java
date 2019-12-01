@@ -9,8 +9,9 @@ public class Generation {
 	private Vector finishA;
 	private Vector finishB;
 	
-	Generation(int num, Vector a, Vector b){
+	public Generation(int num, Vector a, Vector b){
 		numberOfPoints = num;
+		points = new ArrayList<Point>();
 		for (int i = 0; i<numberOfPoints; i++) {
 			points.add(new Point());
 		}
@@ -20,6 +21,10 @@ public class Generation {
 		finishA = a;
 		finishB = new Vector();
 		finishB = b;
+	}
+	
+	public int getSize() {
+		return points.size();
 	}
 	
 	public void movePoints() {
@@ -32,6 +37,7 @@ public class Generation {
 		
 	}
 	
+	
 	void findBest() {
 		int id = 0;
 		int bestValue = 0; 
@@ -39,6 +45,7 @@ public class Generation {
 			if(points.get(i).contains(finishA.getX(), finishA.getY(), finishB.getX(), finishB.getY()))
 				bestValue += 1000;
 			bestValue -= points.get(i).getBrain().step;
+			//Calculate Distance to Goal
 			
 			
 		}

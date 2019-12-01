@@ -38,21 +38,24 @@ public class Point implements Shape{
 	public void calculateFitness() {
 		
 	}
+	public void setDed() {
+		isDed = true;
+	}
 	public void setisBest() {
 		isBest = true;
 	}
 	public void move() {
-		if(brain.directions.length > brain.step) {
+		if(brain.directions.length > brain.step && !didFinish) {
 			acc.modifyX(acc.getX() + brain.directions[brain.step].getX());
 			acc.modifyY(acc.getY() + brain.directions[brain.step].getY());
 			brain.step++;
 		}
-		else {
+		else if (!didFinish){
 			isDed= true;
 		}
 		
 		vel.modifyXY(acc.getX(), acc.getY());
-		if(!isDed) {
+		if(!isDed && !didFinish) {
 		pos.modifyX(pos.getX() + vel.getX());
 		pos.modifyY(pos.getY() + vel.getY());
 		if(pos.getX() >= 400 || pos.getY() >= 400 || pos.getX() <= 0 || pos.getY() < 0) {
@@ -73,12 +76,45 @@ public class Point implements Shape{
 			Graphics2D g2 = (Graphics2D)g;
 			g2.fill(new Ellipse2D.Double(pos.getX(), pos.getY(), 5, 5));
 	}*/
-	public int getDistance(double x, double y, double w, double h) {
-		int distance = 9999;
-		
+	public double getDistance(double x, double y, double w, double h) {
+		double distance = 9999;
+		if(pos.getX() < x) {
+			if(pos.getY() >= y) {
+			distance = x - pos.getX();
+			}
+			else {
+				double a, b;
+				a = x - pos.getX();
+				b = y - pos.getY();
+				distance = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+			}
+		}
+		else if(pos.getX() >= x && pos.getX() <= x+w) {
+			distance = y-pos.getY();
+		}
+		else if(pos.getX() > x+w) {
+			if(pos.getY() >= y) {
+				distance = pos.getX() - x;
+			}
+			else {
+				double a, b;
+				a = pos.getX() - x;
+				b = y - pos.getY();
+				distance = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+			}
+		}
 		
 		
 		return distance;
+	}
+	public void setDidFinish() {
+		didFinish = true;
+	}
+	public boolean getDidFinish() {
+		return didFinish;
+	}
+	public boolean getIsDed() {
+		return isDed;
 	}
 	
 	@Override
@@ -116,7 +152,7 @@ public class Point implements Shape{
 	@Override
 	public boolean contains(double x, double y, double w, double h) {
 		// TODO Auto-generated method stub
-		if(pos.getX() >= x || pos.getY() >= y || pos.getX() <= w || pos.getY() <= h) 
+		if(pos.getX() >= x && pos.getY() >= y && pos.getX() <= w && pos.getY() <= h) 
 			return true;
 		return false;
 	}
