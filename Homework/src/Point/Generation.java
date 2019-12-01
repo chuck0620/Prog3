@@ -66,12 +66,13 @@ public class Generation {
 		calculateFitnessSum();
 		
 		newPoints.add(points.get(bestPointID).getChild());
+		newPoints.get(0).setisBest();
 		for(int i = 1; i < points.size(); i++) {
 			Point pont = selectParent();
 			newPoints.add(pont.getChild());
 		}
 		
-		for(int i = 1; i < numberOfPoints; i++) {
+		for(int i = 0; i < numberOfPoints; i++) {
 			points.set(i, newPoints.get(i).clone());
 		}
 		gen++;
@@ -96,7 +97,7 @@ public class Generation {
 	public void findBest() {
 		int id = 0;
 		double bestValue = -9999;
-		for(int i = 0; i<numberOfPoints; i++) {
+		for(int i = 0; i<points.size(); i++) {
 			if(bestValue < points.get(i).getFitness()) {
 				bestValue = points.get(i).getFitness();
 				id = i;
@@ -104,6 +105,7 @@ public class Generation {
 		}
 		if(points.get(id).getDidFinish())
 			minStep = points.get(id).getBrain().getStep();
+		points.get(0).notBest();
 		points.get(id).setisBest();
 		bestPointID = id;
 	}

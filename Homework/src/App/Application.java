@@ -23,7 +23,7 @@ public class Application{
 		b = new Vector(300, 400);
 		m = new Map(a, b);
 		m.addObstacle(new Obstacle(0, 200, 150, 210));
-		m.addObstacle(new Obstacle(250, 200, 400, 210));
+		//m.addObstacle(new Obstacle(250, 200, 400, 210));
 		m.addObstacle(new Obstacle(50, 100, 350, 120));
 		int x = 0;
 		boolean fut = true;
@@ -31,7 +31,7 @@ public class Application{
 		dp.initGame();
 		
 		Graphics g = null;
-		gen = new Generation(10000, m.getObstacle(0).getPos1(), m.getObstacle(0).getPos2());
+		gen = new Generation(1000, m.getObstacle(0).getPos1(), m.getObstacle(0).getPos2());
 		boolean isDone = false;
 		bs = dp.getCanvas().getBufferStrategy();
 		while(fut) {
@@ -59,8 +59,11 @@ public class Application{
 					g.clearRect(0, 0, 400, 400);
 					drawObstacles(g, m);
 					g.drawRect(0, 0, dp.getCanvas().getWidth()-1, dp.getCanvas().getHeight()-1);
-					for(int i = 0; i < gen.getSize(); i++)
+					
+					for(int i = 1; i < gen.getSize(); i++) {
 						dp.paint(g, gen.getPoint(i));
+					}
+						
 					
 				} finally {
 					bs.show();

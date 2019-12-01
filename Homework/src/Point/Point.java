@@ -40,17 +40,20 @@ public class Point implements Shape{
 	
 	public void calculateFitness(Vector finishA, Vector finishB) {
 		if(didFinish)
-			fitness = 1.0 / 16 + 20000.0/(double)(brain.getStep()*brain.getStep());
+			fitness = 20000.0/(double)(brain.getStep()*brain.getStep());
 		
 		//Calculate Distance to Goal
 		else
-			fitness = 1.0 / (Math.pow(getDistance(finishA.getX(), finishA.getY(), finishB.getX(), finishB.getY()), 2) + 0.01);
+			fitness = 1.0 / (Math.pow(getDistance(finishA.getX(), finishA.getY(), finishB.getX(), finishB.getY()), 2) + 0.00001);
 	}
 	public void setDed() {
 		isDed = true;
 	}
 	public void setisBest() {
 		isBest = true;
+	}
+	public void notBest() {
+		isBest = false;
 	}
 	public void move() {
 		if(brain.directions.length > brain.step && !didFinish) {
@@ -189,6 +192,11 @@ public class Point implements Shape{
 	public double getFitness() {
 		// TODO Auto-generated method stub
 		return fitness;
+	}
+
+	public boolean getIsBest() {
+		// TODO Auto-generated method stub
+		return isBest;
 	}
 	
 }
