@@ -13,9 +13,27 @@ public class Brain {
 	public int getStep() {
 		return step;
 	}
+	
+	void mutate() {
+		double mutationRate = 0.01;
+		for(int i = 0; i<directions.length; i++) {
+			double rand = Math.random();
+			if(rand < mutationRate) {
+				double angle = Math.random() * 9;  
+				directions[i].fromAngle(angle);
+			}
+		}
+	}
+	public Brain clone() {
+		Brain newBrain = new Brain(directions.length);
+		for(int i = 0; i < directions.length; i++)
+			newBrain.directions[i] = directions[i].copy();
+		return newBrain;
+	}
+	
 	void randomize() {									//Randomizing the vectors
 		for(int i = 0; i < directions.length; i++) {
-			double angle = Math.random() * 2 * Math.PI; //Random number from 0 to 2*PI
+			double angle = Math.random() * 9;  
 			directions[i].fromAngle(angle);
 		}
 	}

@@ -23,7 +23,7 @@ public class Point implements Shape{
 	{
 		fitness = 0;
 		brain = new Brain(400);
-		pos = new Vector(200, 0);
+		pos = new Vector(200, 100);
 		acc = new Vector();
 		vel = new Vector();
 		isDed = false; 
@@ -32,11 +32,19 @@ public class Point implements Shape{
 		vel.setLimit(5);
 	}
 	
-	public void show() {
-		
+	public Point getChild() {
+		Point child = new Point();
+		child.brain = brain.clone();
+		return child;
 	}
-	public void calculateFitness() {
-		
+	
+	public void calculateFitness(Vector finishA, Vector finishB) {
+		if(didFinish)
+			fitness += 1000;
+		fitness -= brain.getStep();
+		//Calculate Distance to Goal
+		if(!didFinish)
+			fitness = (int) (fitness / getDistance(finishA.getX(), finishA.getY(), finishB.getX(), finishB.getY()));
 	}
 	public void setDed() {
 		isDed = true;
@@ -58,7 +66,7 @@ public class Point implements Shape{
 		if(!isDed && !didFinish) {
 		pos.modifyX(pos.getX() + vel.getX());
 		pos.modifyY(pos.getY() + vel.getY());
-		if(pos.getX() >= 400 || pos.getY() >= 400 || pos.getX() <= 0 || pos.getY() < 0) {
+		if(pos.getX() >= 400-5 || pos.getY() >= 400-5 || pos.getX() <= 0 || pos.getY() < 0) {
 			isDed = true;
 		}
 		/*else {
@@ -170,6 +178,11 @@ public class Point implements Shape{
 	public PathIterator getPathIterator(AffineTransform at, double flatness) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public int getFitness() {
+		// TODO Auto-generated method stub
+		return fitness;
 	}
 	
 }

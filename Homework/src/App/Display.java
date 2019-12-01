@@ -7,12 +7,20 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Display extends JFrame {
 	private Canvas canvas;
 	private JPanel jp;
+	JButton saveButton;
+	JComboBox jcb;
+	JButton startButton;
+	JTextField jtf;
+	JLabel label1, label2;
 /*	void move() throws InterruptedException {
 		while (true) {
 			p.move();
@@ -30,16 +38,30 @@ public class Display extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-       
+        jp = new JPanel(new FlowLayout());
         
 		
 	}
-	
+	public void initMenu() {
+		label1 = new JLabel("Pontok száma: ");
+		label2 = new JLabel("Pálya: ");
+		startButton = new JButton("Start");
+		jtf= new JTextField(3);
+		jcb = new JComboBox();
+		
+		
+		jp.add(label1);
+		jp.add(jtf);
+		jp.add(label2);
+		jp.add(jcb);
+		jp.add(startButton);
+		add(jp);
+		pack();
+	}
 	public void initGame() {
-		jp = new JPanel(new FlowLayout());
 		canvas = new Canvas();
 
-		JButton saveButton = new JButton("Save and Exit");
+		saveButton = new JButton("Save and Exit");
 		
 		
 		canvas.setPreferredSize(new Dimension(401, 401));
@@ -52,7 +74,9 @@ public class Display extends JFrame {
 	}
 	
 	public void stopGame() {
-		remove(jp);
+		jp.remove(canvas);
+		jp.remove(saveButton);
+		pack();
 	}
 	
 	

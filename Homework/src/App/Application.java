@@ -14,24 +14,32 @@ public class Application{
 	
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
-		Vector a, b;
+		Map m;
 		BufferStrategy bs;
+		Generation gen;
+		Display dp;
+		Vector a, b;
 		a = new Vector(100, 350);
 		b = new Vector(300, 400);
-		Map m = new Map(a, b);
+		m = new Map(a, b);
 		m.addObstacle(new Obstacle(0, 200, 200, 250));
 		m.addObstacle(new Obstacle(300, 200, 400, 250));
 		int x = 0;
 		boolean fut = true;
-		Display dp = new Display();
+		dp = new Display();
 		dp.initGame();
-		dp.getCanvas().createBufferStrategy(2);
-		bs = dp.getCanvas().getBufferStrategy();
-		Graphics g = null;
-		Generation gen = new Generation(50, m.getObstacle(0).getPos1(), m.getObstacle(0).getPos2());
-		boolean isDone = false;
-		while(fut) {
 		
+		Graphics g = null;
+		gen = new Generation(50, m.getObstacle(0).getPos1(), m.getObstacle(0).getPos2());
+		boolean isDone = false;
+		bs = dp.getCanvas().getBufferStrategy();
+		while(fut) {
+			
+			if(bs == null) {
+				dp.getCanvas().createBufferStrategy(3);
+				bs = dp.getCanvas().getBufferStrategy();
+			}
+			
 			do {
 				for(int i = 0; i < gen.getSize(); i++) {
 						gen.getPoint(i).move();
@@ -47,28 +55,28 @@ public class Application{
 					}
 				try {
 					g = bs.getDrawGraphics();
-					drawObstacles(dp.getCanvas().getGraphics(), m);
+					g.clearRect(0, 0, 400, 400);
+					drawObstacles(g, m);
 					g.drawRect(0, 0, dp.getCanvas().getWidth()-1, dp.getCanvas().getHeight()-1);
 					for(int i = 0; i < gen.getSize(); i++)
 						dp.paint(g, gen.getPoint(i));
 					
 				} finally {
+					bs.show();
 					g.dispose();
 				}
-				bs.show();
-			}while (bs.contentsLost());
-			boolean temp = true;
-			for(int i = 0; i < gen.getSize(); i++) {
-				if(!gen.getPoint(i).getIsDed() && !gen.getPoint(i).getDidFinish())
-					temp = false;
-			}
-			isDone = temp;
-			if(isDone)
-				fut = false;
 				
-			Thread.sleep(10);
+			}while (bs.contentsLost());
+			
+			if(gen.isEverythingDed())
+				System.out.println("Everything done!");
+			
+				
+			Thread.sleep(50);
 		
 		}
+		dp.stopGame();
+		dp.initMenu();
 		System.out.println("DONE!");
 		/*while(fut) {
 			switch (x) {
@@ -102,6 +110,10 @@ public class Application{
 		
 	}
 	
+	void render() {
+		
+	}
+	
 	static void drawObstacles(Graphics g, Map m) {
 		int i = 0;
 		g.setColor(Color.GREEN);
@@ -109,6 +121,7 @@ public class Application{
 		g.setColor(Color.red);
 		for(i = 1; i < m.getSize(); i++)
 			g.fillRect(m.getObstacle(i).getPos1().getX(), m.getObstacle(i).getPos1().getY(), m.getObstacle(i).getPos2().getX()-m.getObstacle(i).getPos1().getX(), m.getObstacle(i).getPos2().getY()-m.getObstacle(i).getPos1().getY());
+		g.setColor(Color.black);
 	}
 
 }

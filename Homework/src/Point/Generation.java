@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Generation {
 	private ArrayList<Point> points;
 	private int numberOfPoints;
-	static final double mutationRate = 0.01;
 	private Vector finishA;
 	private Vector finishB;
 	
@@ -23,6 +22,7 @@ public class Generation {
 		finishB = b;
 	}
 	
+	
 	public int getSize() {
 		return points.size();
 	}
@@ -33,22 +33,35 @@ public class Generation {
 		}
 	}
 	
+	public void calculateFitness() {
+		for(int i = 0; i < numberOfPoints; i++) {
+			points.get(i).calculateFitness(finishA, finishB);
+		}
+	}
+	public boolean isEverythingDed() {
+		for(int i = 0; i < numberOfPoints; i++) {
+			if(!points.get(i).getDidFinish() && !points.get(i).getIsDed())
+				return false;
+		}
+		return true;
+	}
+	
 	public void generateChildren() {
+		ArrayList<Point> newPoints = new ArrayList<Point>();
 		
 	}
 	
 	
-	void findBest() {
+	public void findBest() {
 		int id = 0;
-		int bestValue = 0; 
+		int bestValue = -9999;
 		for(int i = 0; i<numberOfPoints; i++) {
-			if(points.get(i).contains(finishA.getX(), finishA.getY(), finishB.getX(), finishB.getY()))
-				bestValue += 1000;
-			bestValue -= points.get(i).getBrain().step;
-			//Calculate Distance to Goal
-			
-			
+			if(bestValue < points.get(i).getFitness()) {
+				bestValue = points.get(i).getFitness();
+				id = i;
+			}
 		}
+		points.get(id).setisBest();
 	}
 	void mutateChildren() {
 		
