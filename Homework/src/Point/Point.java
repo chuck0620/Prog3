@@ -16,14 +16,14 @@ public class Point implements Shape{
 	public Vector vel;
 	public Vector pos;
 	private Vector acc;
-	private int fitness;
+	private double fitness;
 	private boolean isDed;
 	private boolean didFinish;
 	private boolean isBest;
 	{
 		fitness = 0;
 		brain = new Brain(400);
-		pos = new Vector(200, 100);
+		pos = new Vector(200, 0);
 		acc = new Vector();
 		vel = new Vector();
 		isDed = false; 
@@ -40,11 +40,11 @@ public class Point implements Shape{
 	
 	public void calculateFitness(Vector finishA, Vector finishB) {
 		if(didFinish)
-			fitness += 1000;
-		fitness -= brain.getStep();
+			fitness = 1.0 / 16 + 20000.0/(double)(brain.getStep()*brain.getStep());
+		
 		//Calculate Distance to Goal
-		if(!didFinish)
-			fitness = (int) (fitness / getDistance(finishA.getX(), finishA.getY(), finishB.getX(), finishB.getY()));
+		else
+			fitness = 1.0 / (Math.pow(getDistance(finishA.getX(), finishA.getY(), finishB.getX(), finishB.getY()), 2) + 0.01);
 	}
 	public void setDed() {
 		isDed = true;
@@ -84,6 +84,12 @@ public class Point implements Shape{
 			Graphics2D g2 = (Graphics2D)g;
 			g2.fill(new Ellipse2D.Double(pos.getX(), pos.getY(), 5, 5));
 	}*/
+	public Point clone() {
+		Point clone = new Point();
+		clone.brain = brain.clone();
+		return clone;
+	}
+	
 	public double getDistance(double x, double y, double w, double h) {
 		double distance = 9999;
 		if(pos.getX() < x) {
@@ -180,7 +186,7 @@ public class Point implements Shape{
 		return null;
 	}
 
-	public int getFitness() {
+	public double getFitness() {
 		// TODO Auto-generated method stub
 		return fitness;
 	}
