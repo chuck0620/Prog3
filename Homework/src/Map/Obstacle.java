@@ -10,6 +10,12 @@ import java.awt.geom.Rectangle2D;
 import Point.Vector;
 
 public class Obstacle implements Shape {
+	/*
+	 * A palyaelemek osztalya.
+	 * pos1: A bal felso sarka az akadalynak
+	 * pos2: A jobb felso sarka
+	 * A cel is egy Obstacle
+	 */
 	Vector pos1;
 	Vector pos2;
 	

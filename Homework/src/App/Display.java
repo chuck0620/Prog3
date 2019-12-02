@@ -4,7 +4,12 @@ import Point.*;
 import Point.Point;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +26,7 @@ public class Display extends JFrame {
 	JButton startButton;
 	JTextField jtf;
 	JLabel label1, label2;
+	boolean savePressed;
 /*	void move() throws InterruptedException {
 		while (true) {
 			p.move();
@@ -38,6 +44,7 @@ public class Display extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+        savePressed = false;
         jp = new JPanel(new FlowLayout());
         
 		
@@ -58,6 +65,22 @@ public class Display extends JFrame {
 		add(jp);
 		pack();
 	}
+	public boolean getSavePressed() {
+		return savePressed;
+	}
+	private class SaveButtonActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(savePressed)
+				savePressed = false;
+			else 
+				savePressed = true;
+			
+			
+		}
+		
+	}
 	public void initGame() {
 		canvas = new Canvas();
 
@@ -67,6 +90,8 @@ public class Display extends JFrame {
 		canvas.setPreferredSize(new Dimension(401, 401));
         canvas.setMaximumSize(new Dimension(401, 401));
         canvas.setMinimumSize(new Dimension(401, 401));
+		saveButton.addActionListener(new SaveButtonActionListener());
+
         jp.add(canvas);
 		jp.add(saveButton);
         add(jp);

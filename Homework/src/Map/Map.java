@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import Point.Vector;
 
 public class Map {
+	/*
+	 * A palya
+	 * obstacles: Obstacle tipusokat tarolo ArrayList
+	 * A 0. eleme mindig a cel
+	 */
 	ArrayList<Obstacle> obstacles;
 	public Map(Vector a, Vector b){
 		obstacles = new ArrayList<Obstacle>();

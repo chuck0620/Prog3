@@ -2,6 +2,12 @@ package App;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -12,20 +18,32 @@ import Point.Point;
 public class Application{
 	
 	
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		// TODO Auto-generated method stub
 		Map m;
 		BufferStrategy bs;
 		Generation gen;
 		Display dp;
 		Vector a, b;
-		a = new Vector(100, 350);
-		b = new Vector(300, 400);
+		BufferedReader br = new BufferedReader(new FileReader("testin.txt"));
+		int numberOfObstacles = Integer.parseInt(br.readLine());
+		int c, d;
+		c = Integer.parseInt(br.readLine());
+		d = Integer.parseInt(br.readLine());
+		a = new Vector(c, d);
+		c = Integer.parseInt(br.readLine());
+		d = Integer.parseInt(br.readLine());
+		b =new Vector(c, d);
 		m = new Map(a, b);
-		m.addObstacle(new Obstacle(0, 200, 150, 210));
-		//m.addObstacle(new Obstacle(250, 200, 400, 210));
-		m.addObstacle(new Obstacle(50, 100, 350, 120));
-		int x = 0;
+		for(int i = 0; i < numberOfObstacles; i++) {
+			int x, y;
+			c = Integer.parseInt(br.readLine());
+			d = Integer.parseInt(br.readLine());
+			x = Integer.parseInt(br.readLine());
+			y = Integer.parseInt(br.readLine());
+			m.addObstacle(new Obstacle(c, d, x, y));
+		}
+		
 		boolean fut = true;
 		dp = new Display();
 		dp.initGame();
@@ -35,7 +53,9 @@ public class Application{
 		boolean isDone = false;
 		bs = dp.getCanvas().getBufferStrategy();
 		while(fut) {
-			if(!gen.isEverythingDed()) {
+			System.out.println(gen.getGen() + ". generáció");
+			while(!gen.isEverythingDed()) {
+				
 			if(bs == null) {
 				dp.getCanvas().createBufferStrategy(3);
 				bs = dp.getCanvas().getBufferStrategy();
@@ -46,7 +66,6 @@ public class Application{
 						gen.movePoint(i);
 						if(gen.getPoint(i).contains(m.getObstacle(0).getPos1().getX(), m.getObstacle(0).getPos1().getY(), m.getObstacle(0).getPos2().getX(), m.getObstacle(0).getPos2().getY())) {
 							gen.getPoint(i).setDidFinish();
-							System.out.println("Finished!");
 						}
 						if(m.getSize() > 1)
 							for(int j = 1; j < m.getSize(); j++)
@@ -71,27 +90,26 @@ public class Application{
 				}
 				
 			}while (bs.contentsLost());
-			
+			Thread.sleep(20);
 			}
-			else {
+			
+				if(dp.getSavePressed()) {
+					BufferedWriter bw = new BufferedWriter(new FileWriter("test.txt", true));
+					bw.append("Generation: " + gen.getGen() + " Legjobb lepesszam: " + gen.getMinStep() + "\n");
+					bw.close();}
+				
 			gen.calculateFitness();
 			gen.generateChildren();
 			gen.mutateChildren();
 			
-			}
-			Thread.sleep(10);
+			
+			Thread.sleep(2000);
 		
 		}
-		dp.stopGame();
-		dp.initMenu();
-		System.out.println("DONE!");
 
 		
 	}
 	
-	void render() {
-		
-	}
 	
 	static void drawObstacles(Graphics g, Map m) {
 		int i = 0;

@@ -1,6 +1,12 @@
 package Point;
 
 public class Vector {
+	/*
+	 * Egy egyedi vektor oszaly, ami tartalmaz 
+	 * x: az x koordinata
+	 * y: az y koordinata
+	 * limit: a limit fole nem mehet x és y erteke
+	 */
 	private int x;
 	private int y;
 	int limit;
@@ -49,6 +55,11 @@ public class Vector {
 		modifyY(newy);
 	}
 	public void fromAngle(double angle) {
+		/*
+		 * A brain vektorainak generalasara hasznalt fuggveny, ami egy random szamot kap
+		 * 0-tol 9-ig, es megvizsgalja a kapott szam egeszreszet
+		 * igy vegul 8 irany kozul allitja be az egyiket (+ a (0, 0), azaz egyik irany sem 
+		 */
 		switch ((int)angle) {
 		case 0:
 			x = 0;

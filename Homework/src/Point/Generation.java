@@ -3,6 +3,17 @@ package Point;
 import java.util.ArrayList;
 
 public class Generation {
+	/*
+	 * Egy generacio taroloosztalya
+	 * points: Point tipusokat tarolo ArrayList
+	 * numberOfPoints: igazabol points.size()
+	 * finishA: A celterulet bal felso sarka
+	 * finishB: A celterulet jobb felso sarka
+	 * fitnessSum: fitnessek osszege, a szulo kivalasztasahoz kell
+	 * bestPointID: A legjobb pont indexe
+	 * gen: a generacio sorszama
+	 * minStep: A legkevesebb lepes amibol befejezheto a palya
+	 */
 	private ArrayList<Point> points;
 	private int numberOfPoints;
 	private Vector finishA;
@@ -31,6 +42,7 @@ public class Generation {
 	}
 	
 	public void calculateFitnessSum() {
+		//A fitnessek osszegenek szamolasa
 		for(int i = 0; i < points.size(); i++)
 			fitnessSum += points.get(i).getFitness();
 	}
@@ -39,18 +51,21 @@ public class Generation {
 	}
 	
 	public void movePoint(int i) {
+		//pont mozgatasa
 			points.get(i).move();
-			if(points.get(i).getBrain().getStep() > minStep)
+			if(points.get(i).getBrain().getStep() > minStep) //Ha tobbet lepne mint a minstep, meghal
 				points.get(i).setDed();
 		
 	}
 	
 	public void calculateFitness() {
+		//fitnessek szamolasa
 		for(int i = 0; i < numberOfPoints; i++) {
 			points.get(i).calculateFitness(finishA, finishB);
 		}
 	}
 	public boolean isEverythingDed() {
+		//Meghalt-e/vegzett-e minden pont
 		for(int i = 0; i < numberOfPoints; i++) {
 			if(!points.get(i).getDidFinish() && !points.get(i).getIsDed())
 				return false;
@@ -61,6 +76,13 @@ public class Generation {
 		return gen;
 	}
 	public void generateChildren() {
+		/*
+		 * A genetikus algoritmus lelke
+		 * Megkeresi a legjobb pontot, ami mindenképpen oroklodik,
+		 * majd kiszamolja a fitnessSum-ot. Ez utan atadja a legjobbat
+		 * az uj generacionak es megkezdi az uj generacio
+		 * letrehozasat.
+		 */
 		ArrayList<Point> newPoints = new ArrayList<Point>();
 		findBest();
 		calculateFitnessSum();
@@ -80,6 +102,10 @@ public class Generation {
 		System.out.println(minStep);
 	}
 	Point selectParent() {
+		/*
+		 * Kivalasztja a pont oset, ahonnan az agyat fogja orokolni
+		 * Minel nagyobb a fitnesse egy pontnak, annal valoszinubb, hogy o lesz valasztva
+		 */
 		double rand = Math.random() * fitnessSum;
 		double temp = 0;
 		for(int i = 0; i < points.size(); i++) {
@@ -89,12 +115,17 @@ public class Generation {
 			
 		}
 		
-		
+		//Idaig nem juthat el a program
 		return null;
 	}
 	
-	
+	public int getMinStep() {
+		return minStep;
+	}
 	public void findBest() {
+		/*
+		 * Szimpla linearis kereses a legjobb pont megtalalasahoz
+		 */
 		int id = 0;
 		double bestValue = -9999;
 		for(int i = 0; i<points.size(); i++) {
@@ -110,6 +141,10 @@ public class Generation {
 		bestPointID = id;
 	}
 	public void mutateChildren() {
+		/*
+		 * A leszarmazottak mutalasa
+		 * Erre azert van szukseg, hogy a fejlodes ne akadjon be
+		 */
 		for(int i = 0; i<numberOfPoints; i++) {
 			points.get(i).getBrain().mutate();
 		}
