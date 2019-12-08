@@ -22,10 +22,10 @@ public class Display extends JFrame {
 	private Canvas canvas;
 	private JPanel jp;
 	JButton saveButton;
-	JComboBox jcb;
-	JButton startButton;
-	JTextField jtf;
-	JLabel label1, label2;
+	//JComboBox jcb;
+	//JButton startButton;
+	//JTextField jtf;
+	//JLabel label1, label2;
 	boolean savePressed;
 /*	void move() throws InterruptedException {
 		while (true) {
@@ -49,7 +49,7 @@ public class Display extends JFrame {
         
 		
 	}
-	public void initMenu() {
+	/*public void initMenu() {
 		label1 = new JLabel("Pontok száma: ");
 		label2 = new JLabel("Pálya: ");
 		startButton = new JButton("Start");
@@ -64,7 +64,7 @@ public class Display extends JFrame {
 		jp.add(startButton);
 		add(jp);
 		pack();
-	}
+	}*/
 	public boolean getSavePressed() {
 		return savePressed;
 	}
@@ -72,8 +72,19 @@ public class Display extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(savePressed)
+			if(savePressed) {
 				savePressed = false;
+				BufferedWriter bw;
+				try {
+					bw = new BufferedWriter(new FileWriter("test.txt", true));
+					bw.append("---------------------------------------------------------------------------" + "\n");
+					bw.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+			}
 			else 
 				savePressed = true;
 			
@@ -84,7 +95,7 @@ public class Display extends JFrame {
 	public void initGame() {
 		canvas = new Canvas();
 
-		saveButton = new JButton("Save and Exit");
+		saveButton = new JButton("Start/Stop Save");
 		
 		
 		canvas.setPreferredSize(new Dimension(401, 401));
@@ -98,11 +109,11 @@ public class Display extends JFrame {
         pack();
 	}
 	
-	public void stopGame() {
+	/*public void stopGame() {
 		jp.remove(canvas);
 		jp.remove(saveButton);
 		pack();
-	}
+	}*/
 	
 	
 	public Canvas getCanvas() {

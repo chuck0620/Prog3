@@ -19,13 +19,13 @@ public class Application{
 	
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
-		// TODO Auto-generated method stub
 		Map m;
 		BufferStrategy bs;
 		Generation gen;
 		Display dp;
 		Vector a, b;
 		BufferedReader br = new BufferedReader(new FileReader("testin.txt"));
+		int numberOfPoints = Integer.parseInt(br.readLine());
 		int numberOfObstacles = Integer.parseInt(br.readLine());
 		int c, d;
 		c = Integer.parseInt(br.readLine());
@@ -49,7 +49,7 @@ public class Application{
 		dp.initGame();
 		
 		Graphics g = null;
-		gen = new Generation(1000, m.getObstacle(0).getPos1(), m.getObstacle(0).getPos2());
+		gen = new Generation(numberOfPoints, m.getObstacle(0).getPos1(), m.getObstacle(0).getPos2());
 		boolean isDone = false;
 		bs = dp.getCanvas().getBufferStrategy();
 		while(fut) {
@@ -103,7 +103,7 @@ public class Application{
 			gen.mutateChildren();
 			
 			
-			Thread.sleep(2000);
+			Thread.sleep(10);
 		
 		}
 

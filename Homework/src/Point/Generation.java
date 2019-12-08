@@ -153,4 +153,8 @@ public class Generation {
 	public Point getPoint(int i) {
 		return points.get(i);
 	}
+
+	public double getFitnessSum() {
+		return fitnessSum;
+	}
 }

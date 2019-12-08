@@ -34,7 +34,7 @@ public class Vector {
 	public int getY() {
 		return y;
 	}
-	public void modifyY(int newy) {
+	public void setY(int newy) {
 		if(newy <= limit) {
 		y = newy;
 		}
@@ -42,7 +42,7 @@ public class Vector {
 			y = limit;
 		}
 	}
-	public void modifyX(int newx) {
+	public void setX(int newx) {
 		if(newx <= limit) {
 			x = newx;
 			}
@@ -50,9 +50,9 @@ public class Vector {
 				x = limit;
 			}
 	}
-	public void modifyXY(int newx, int newy) {
-		modifyX(newx);
-		modifyY(newy);
+	public void setXY(int newx, int newy) {
+		setX(newx);
+		setY(newy);
 	}
 	public void fromAngle(double angle) {
 		/*

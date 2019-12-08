@@ -89,18 +89,18 @@ public class Point implements Shape{
 		 * 4.) ha elerte a palya szelet, meghal
 		 */
 		if(brain.directions.length > brain.step && !didFinish) {
-			acc.modifyX(acc.getX() + brain.directions[brain.step].getX());
-			acc.modifyY(acc.getY() + brain.directions[brain.step].getY());
+			acc.setX(brain.directions[brain.step].getX());
+			acc.setY(brain.directions[brain.step].getY());
 			brain.step++;
 		}
 		else if (!didFinish){
 			isDed= true;
 		}
 		
-		vel.modifyXY(acc.getX(), acc.getY());
+		vel.setXY(vel.getX() + acc.getX(),vel.getY() + acc.getY());
 		if(!isDed && !didFinish) {
-		pos.modifyX(pos.getX() + vel.getX());
-		pos.modifyY(pos.getY() + vel.getY());
+		pos.setX(pos.getX() + vel.getX());
+		pos.setY(pos.getY() + vel.getY());
 		if(pos.getX() >= 400-5 || pos.getY() >= 400-5 || pos.getX() <= 0 || pos.getY() < 0) {
 			isDed = true;
 		}
